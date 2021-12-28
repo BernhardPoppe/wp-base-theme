@@ -1,0 +1,46 @@
+/*@font-face {
+  font-family: 'DiaRegular';
+  src:  url('../graphics/fonts/dia-v12-woff-eot/Dia_Regular.woff') format('woff'),
+        url('../graphics/fonts/dia-v12-woff-eot/Dia_Regular.eot') format('eot');
+}*/
+
+html{
+	font-size:120%;
+}
+
+@media (max-width: 700px){
+	html{
+		font-size:100%;
+	}
+}
+
+body{
+	padding: 0px;
+	margin: 0px;
+	color: $c_main;
+	font-family: sans-serif;
+	font-weight: normal !important;
+}
+
+a {
+  color: $c_main;
+  text-decoration: none;
+  &:visited{
+    color: $c_main;
+  }
+  &:hover{
+  	text-decoration: underline;
+  	color: $c_red;
+  }
+  &:active{
+    color: $c_main;
+  }
+}
+
+h2 {
+	font-size: 2rem;
+}
+
+h1, h2, h3, h4, h5, h6{
+	font-weight: normal;
+}

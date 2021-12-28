@@ -1,0 +1,41 @@
+{
+  "name": "base_theme",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "lint": "eslint .",
+    "watch": "parcel watch ./src/index.js ./src/theme.scss ./src/editor.scss",
+    "build": "rm -rf dist/* && parcel build ./src/index.js ./src/theme.scss ./src/editor.scss",
+    "deploy": "npm run build && git add . && git commit -m newbuild && git push"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "autocomplete": "^0.0.1",
+    "cssnano": "^5.0.6",
+    "flickity": "^2.2.2",
+    "flickity-bg-lazyload": "^1.0.1",
+    "jquery": "^3.6.0",
+    "parcel": "^2.0.0-nightly.389",
+    "postcss": "^8.3.5",
+    "postcss-viewport-height-correction": "^1.1.1"
+  },
+  "postcss": {
+    "plugins": {
+      "postcss-viewport-height-correction": {},
+      "autoprefixer": {
+        "overrideBrowserslist": [
+          "> 1%",
+          "last 4 versions",
+          "ie >= 9"
+        ]
+      },
+      "cssnano": {}
+    }
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.0.0-rc.0",
+    "autoprefixer": "^10.2.6",
+    "eslint": "^7.31.0"
+  }
+}
