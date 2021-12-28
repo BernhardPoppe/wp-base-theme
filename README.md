@@ -1,4 +1,4 @@
-# docker-wordpress-theme-setup
+# wp-base-theme
 
 This is my base for Wordpress Theme Developement.
 
