@@ -12,10 +12,12 @@
   "license": "ISC",
   "dependencies": {
     "autocomplete": "^0.0.1",
+    "cash-dom": "^8.1.0",
     "cssnano": "^5.0.6",
+    "dom-fader": "^2.0.2",
+    "dom-slider": "^2.1.6",
     "flickity": "^2.2.2",
     "flickity-bg-lazyload": "^1.0.1",
-    "jquery": "^3.6.0",
     "parcel": "^2.0.0-nightly.389",
     "postcss": "^8.3.5",
     "postcss-viewport-height-correction": "^1.1.1"

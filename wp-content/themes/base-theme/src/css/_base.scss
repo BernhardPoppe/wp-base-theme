@@ -15,27 +15,14 @@ html{
 }
 
 body{
-	padding: 0px;
+	padding: $main_padding;
 	margin: 0px;
 	color: $c_main;
 	font-family: sans-serif;
 	font-weight: normal !important;
 }
 
-a {
-  color: $c_main;
-  text-decoration: none;
-  &:visited{
-    color: $c_main;
-  }
-  &:hover{
-  	text-decoration: underline;
-  	color: $c_red;
-  }
-  &:active{
-    color: $c_main;
-  }
-}
+
 
 h2 {
 	font-size: 2rem;
@@ -43,4 +30,9 @@ h2 {
 
 h1, h2, h3, h4, h5, h6{
 	font-weight: normal;
+}
+
+#logo {
+	width: 80px;
+	margin: 20px;
 }

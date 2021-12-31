@@ -2,10 +2,14 @@
 //import 'flickity-bg-lazyload'
 //import imagesLoaded from 'imagesloaded'
 
-const jquery = require('jquery')
-window.$ = window.jQuery = jquery
+import $ from "cash-dom";
+require('./js/_custom-vh.js')
+require('./js/_cash-slide.js')
+//require('./js/_cash-fade.js')
 
-$( document ).ready(() => {
-	require('./js/_custom_vh.js')
-	console.log('ready')
-})
+$(function () {
+  	$('html').addClass ( 'dom-loaded' )
+	$("#trigger").on('click', function() {
+		$(".box").slideToggle()
+	});
+});

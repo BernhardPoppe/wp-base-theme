@@ -50,7 +50,7 @@ add_action( 'init', 'register_custom_menus' );
 function custom_header_scripts()
 {
     if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()){
-        wp_register_script('custom_scripts', get_template_directory_uri() . '/dist/index.js', array('jquery'), '1.0.0'); // Custom scripts
+        wp_register_script('custom_scripts', get_template_directory_uri() . '/dist/index.js'); // Custom scripts
         wp_enqueue_script('custom_scripts'); // Enqueue it!
     }
 }

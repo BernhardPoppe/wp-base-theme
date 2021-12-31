@@ -23,7 +23,7 @@
 		<header class="header clear" role="banner">
 
 			<a href="<?php echo get_home_url(); ?>">
-				<img id="project_logo" src="<?php echo get_template_directory_uri(); ?>">
+				<img id="logo" src="<?php echo get_template_directory_uri(); ?>/graphics/logo.svg">
 			</a>
 
 			<nav>
