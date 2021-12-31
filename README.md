@@ -28,3 +28,8 @@ Then open the theme-folder in Terminal and type:
 npm install
 ````
 
+To delete the docker-database and the wp-install, exit docker with
+````
+docker-compose down -v
+````
+
