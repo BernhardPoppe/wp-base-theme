@@ -53,6 +53,13 @@ function custom_header_scripts()
         wp_register_script('custom_scripts', get_template_directory_uri() . '/dist/index.js'); // Custom scripts
         wp_enqueue_script('custom_scripts'); // Enqueue it!
     }
+    function localize_vars() {
+        return array(
+            'stylesheet_directory' => get_stylesheet_directory_uri()
+        );
+    }
+    wp_localize_script( 'custom_scripts', 'wp', localize_vars() );
+    //in js: get the theme-path via wp.stylesheet_directory
 }
 
 // Load styles
