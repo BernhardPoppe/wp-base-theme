@@ -22,6 +22,8 @@
 
 		<header class="header clear" role="banner">
 
+			<a id="skip-nav-link" href="#main">Zum Hauptinhalt springen</a>
+
 			<a href="<?php echo get_home_url(); ?>">
 				<img id="logo" src="<?php echo get_template_directory_uri(); ?>/graphics/logo.svg">
 			</a>
