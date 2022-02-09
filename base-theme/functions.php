@@ -46,11 +46,16 @@ add_action( 'init', 'register_custom_menus' );
 \*------------------------------------*/
 
 
+function manifest(){
+    $manifest = file_get_contents(get_template_directory_uri() . "/dist/parcel-manifest.json");
+    return json_decode($manifest, true);
+}
+
 // Load scripts (header.php)
 function custom_header_scripts()
 {
     if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()){
-        wp_register_script('custom_scripts', get_template_directory_uri() . '/dist/index.js'); // Custom scripts
+        wp_register_script('custom_scripts', get_template_directory_uri() . '/dist' . manifest()['index.js']); // Custom scripts
         wp_enqueue_script('custom_scripts'); // Enqueue it!
     }
     function localize_vars() {
@@ -65,12 +70,12 @@ function custom_header_scripts()
 // Load styles
 function custom_styles()
 {
-    wp_register_style('theme_css', get_template_directory_uri() . '/dist/theme.css', array(), '1.0', 'all');
+    wp_register_style('theme_css', get_template_directory_uri() . '/dist'  . manifest()['theme.scss'], array(), '1.0', 'all');
     wp_enqueue_style('theme_css'); // Enqueue it!
 }
 
 function theme_editor_styles() {
-    wp_enqueue_style( 'editor-css', get_template_directory_uri() . '/dist/editor.css' );
+    wp_enqueue_style( 'editor-css', get_template_directory_uri() . '/dist'  . manifest()['editor.scss'] );
 }
 
 add_action( 'enqueue_block_editor_assets', 'theme_editor_styles' );
@@ -126,7 +131,6 @@ function html5_style_remove($tag)
 
 // Add Actions
 add_action('init', 'custom_header_scripts'); // Add Custom Scripts to wp_head
-add_action('wp_print_scripts', 'custom_css_conditional_scripts'); // Add Conditional Page Scripts
 add_action('wp_enqueue_scripts', 'custom_styles'); // Add Theme Stylesheet
 add_action('widgets_init', 'my_remove_recent_comments_style'); // Remove inline Recent Comment Styles from wp_head()
 

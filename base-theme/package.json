@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "lint": "eslint .",
-    "watch": "parcel watch ./src/index.js ./src/theme.scss ./src/editor.scss",
-    "build": "rm -rf dist/* && parcel build ./src/index.js ./src/theme.scss ./src/editor.scss",
+    "watch": "rm -rf .parcel-cache && rm -rf dist && parcel watch ./src/index.js ./src/theme.scss ./src/editor.scss",
+    "build": "rm -rf .parcel-cache && rm -rf dist && parcel build ./src/index.js ./src/theme.scss ./src/editor.scss",
     "deploy": "npm run build && git add . && git commit -m newbuild && git push"
   },
   "author": "",
@@ -38,6 +38,16 @@
   "devDependencies": {
     "@parcel/transformer-sass": "^2.0.0-rc.0",
     "autoprefixer": "^10.2.6",
-    "eslint": "^7.31.0"
+    "eslint": "^7.31.0",
+    "parcel-namer-rewrite": "^2.0.0-rc.2",
+    "parcel-reporter-bundle-manifest": "^1.0.0"
+  },
+  "parcel-namer-rewrite": {
+        "chain": "@parcel/namer-default",
+                
+        "rules": {
+            "theme.css": "theme.{hash}.css",
+            "index.js": "index.{hash}.js"
+        }
   }
 }
