@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@parcel/transformer-sass": "^2.3.0",
     "autocomplete": "^0.0.1",
     "cash-dom": "^8.1.0",
     "cssnano": "^5.0.6",
@@ -36,18 +37,16 @@
     }
   },
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.0.0-rc.0",
     "autoprefixer": "^10.2.6",
     "eslint": "^7.31.0",
     "parcel-namer-rewrite": "^2.0.0-rc.2",
     "parcel-reporter-bundle-manifest": "^1.0.0"
   },
   "parcel-namer-rewrite": {
-        "chain": "@parcel/namer-default",
-                
-        "rules": {
-            "theme.css": "theme.{hash}.css",
-            "index.js": "index.{hash}.js"
-        }
+    "chain": "@parcel/namer-default",
+    "rules": {
+      "theme.css": "theme.{hash}.css",
+      "index.js": "index.{hash}.js"
+    }
   }
 }
