@@ -45,8 +45,8 @@
   "parcel-namer-rewrite": {
     "chain": "@parcel/namer-default",
     "rules": {
-      "theme.css": "theme.{hash}.css",
-      "index.js": "index.{hash}.js"
+      "theme.css": "theme{.hash}.css",
+      "index.js": "index{.hash}.js"
     }
   }
 }
