@@ -47,7 +47,7 @@ add_action( 'init', 'register_custom_menus' );
 
 
 function manifest(){
-    $manifest = file_get_contents(get_template_directory_uri() . "/dist/parcel-manifest.json");
+    $manifest = file_get_contents("dist/parcel-manifest.json", FILE_USE_INCLUDE_PATH);
     return json_decode($manifest, true);
 }
 
