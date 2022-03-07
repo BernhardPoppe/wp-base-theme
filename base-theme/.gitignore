@@ -117,3 +117,4 @@ out
 .pnp.*
 
 .DS_Store
+dist/
