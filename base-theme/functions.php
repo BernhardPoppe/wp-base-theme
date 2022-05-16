@@ -182,19 +182,12 @@ function disable_emojis_tinymce( $plugins ) {
   }
 }
 
-/**
- * Disable jQuery Migrate in WordPress.
- *
- * @author Guy Dumais.
- * @link https://en.guydumais.digital/disable-jquery-migrate-in-wordpress/
- */
-add_filter( 'wp_default_scripts', $af = static function( &$scripts) {
-    if(!is_admin()) {
-        $scripts->remove( 'jquery');
-        $scripts->add( 'jquery', false, array( 'jquery-core' ), '1.12.4' );
-    }    
-}, PHP_INT_MAX );
-unset( $af );
+// Remove jQuery
+add_filter( 'wp_enqueue_scripts', 'change_default_jquery', PHP_INT_MAX );
+function change_default_jquery( ){
+    wp_dequeue_script( 'jquery');
+    wp_deregister_script( 'jquery');   
+}
 
 //Import custom registered ACF-Blocks.
 require('blocks/register_blocks.php');
