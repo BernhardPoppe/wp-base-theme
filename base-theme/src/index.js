@@ -2,5 +2,5 @@
 require('./js/_custom-vh.js')
 
 document.addEventListener('DOMContentLoaded', function() {
-	console.log(DOM Content Loaded)
+	console.log('DOM Content Loaded')
 })
