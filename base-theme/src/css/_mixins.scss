@@ -3,7 +3,7 @@
 @use 'sass:math';
 
 $spalten-anzahl:4;
-$spalten-breite: math.div(100%, $spalten-anzahl);
+$spalten-breite: math.div(100%, $spalten-anzahl - 1);
 
 @mixin mask_sprite($spalte: 0, $zeile: 0, $span-across:1, $mode:mask) { //mode:background ist hier auch möglich...
 	#{$mode}: url("../graphics/graphics.svg");
