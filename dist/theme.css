@@ -1,0 +1,6 @@
+/*!
+	Design and Code: Bernhard Poppe
+	www.bernhardpoppe.at
+	hi@bernhardpoppe.at
+*/html{font-size:120%;scroll-behavior:smooth}@media (max-width:700px){html{font-size:100%}}body{color:#000;font-family:sans-serif;font-weight:400!important;margin:0;padding:30px}h2{font-size:2rem}h1,h2,h3,h4,h5,h6{font-weight:400}#logo{margin:20px;width:80px}#skip-nav-link{background:#000;color:#fff;left:0;padding:.5rem 1.5rem;position:absolute;top:0;-webkit-transform:translateY(-120%);-ms-transform:translateY(-120%);transform:translateY(-120%);-webkit-transition:-webkit-transform .3s;transition:-webkit-transform .3s;-o-transition:transform .3s;transition:transform .3s;transition:transform .3s,-webkit-transform .3s}#skip-nav-link:focus{-webkit-transform:translateY(0);-ms-transform:translateY(0);transform:translateY(0)}
+/*# sourceMappingURL=theme.css.map */

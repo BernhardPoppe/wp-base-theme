@@ -1,0 +1,2 @@
+(()=>{const e=e=>{let n;const t=()=>{let t=e.clientHeight;t!==n&&requestAnimationFrame((function(){e.style.setProperty("--vh",.01*t+"px"),n=t}))};return t(),t};window.addEventListener("resize",e(document.documentElement)),window.addEventListener("orientationchange",e(document.documentElement)),document.addEventListener("DOMContentLoaded",(function(){console.log("DOM Content Loaded")}))})();
+//# sourceMappingURL=index.js.map
