@@ -16,11 +16,9 @@
     "cssnano": "^5.0.6",
     "parcel": "^2.0.0-nightly.389",
     "postcss": "^8.3.5",
-    "postcss-viewport-height-correction": "^1.1.1"
   },
   "postcss": {
     "plugins": {
-      "postcss-viewport-height-correction": {},
       "autoprefixer": {
         "overrideBrowserslist": [
           "> 1%",
