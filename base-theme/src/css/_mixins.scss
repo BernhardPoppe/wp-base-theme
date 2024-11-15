@@ -1,23 +1,24 @@
 //Sprite;
 
-@use 'sass:math';
+@use "sass:math";
 
-$spalten-anzahl:4;
+$spalten-anzahl: 4;
 $spalten-breite: math.div(100%, $spalten-anzahl - 1);
 
-@mixin mask_sprite($spalte: 0, $zeile: 0, $span-across:1, $mode:mask) { //mode:background ist hier auch möglich...
-	#{$mode}: url("../graphics/graphics.svg");
-	#{$mode}-position: $spalten-breite * $spalte $zeile * 10%;
-	#{$mode}-size:  math.div($spalten-anzahl * 100%, $span-across);
+@mixin mask_sprite($spalte: 0, $zeile: 0, $span-across: 1, $mode: mask) {
+  //mode:background ist hier auch möglich...
+  #{$mode}: url("../graphics/graphics.svg");
+  #{$mode}-position: $spalten-breite * $spalte $zeile * 10%;
+  #{$mode}-size: math.div($spalten-anzahl * 100%, $span-across);
 }
 
 @mixin bounce($property: all, $time: 500ms) {
-    transition: $property $time cubic-bezier(0.680, -0.550, 0.265, 1.550);
+  transition: $property $time cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 @mixin flex-center($direction: column) {
-    display: flex;
-	flex-direction: $direction;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  flex-direction: $direction;
+  justify-content: center;
+  align-items: center;
 }

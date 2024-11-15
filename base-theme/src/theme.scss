@@ -5,9 +5,6 @@
 */
 
 //for the theme
+@use "css/_base.scss";
 
-@import 'css/_variables.scss';
-@import 'css/_mixins.scss';
-@import 'css/_base.scss';
-
-@import 'css/_block_imports.scss';
+@use "css/_block_imports.scss";

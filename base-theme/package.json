@@ -24,13 +24,6 @@
   "postcss": {
     "plugins": {
       "postcss-viewport-height-correction": {},
-      "autoprefixer": {
-        "overrideBrowserslist": [
-          "> 1%",
-          "last 4 versions",
-          "ie >= 9"
-        ]
-      },
       "cssnano": {}
     }
   },

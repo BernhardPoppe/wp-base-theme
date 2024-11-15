@@ -1,54 +1,60 @@
+@use "_variables" as *;
+@use "_mixins" as *;
+
 /*@font-face {
   font-family: 'DiaRegular';
   src:  url('../graphics/fonts/dia-v12-woff-eot/Dia_Regular.woff') format('woff'),
         url('../graphics/fonts/dia-v12-woff-eot/Dia_Regular.eot') format('eot');
 }*/
 
-html{
-	font-size:120%;
-	scroll-behavior: smooth;
+html {
+  font-size: 120%;
+  scroll-behavior: smooth;
 }
 
-@media (max-width: 700px){
-	html{
-		font-size:100%;
-	}
+@media (max-width: 700px) {
+  html {
+    font-size: 100%;
+  }
 }
 
-body{
-	padding: $main_padding;
-	margin: 0px;
-	color: $c_main;
-	font-family: sans-serif;
-	font-weight: normal !important;
+body {
+  padding: $main_padding;
+  margin: 0px;
+  color: $c_main;
+  font-family: sans-serif;
+  font-weight: normal !important;
 }
-
-
 
 h2 {
-	font-size: 2rem;
+  font-size: 2rem;
 }
 
-h1, h2, h3, h4, h5, h6{
-	font-weight: normal;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
 }
 
 #logo {
-	width: 80px;
-	margin: 20px;
+  width: 80px;
+  margin: 20px;
 }
 
 #skip-nav-link {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	transform: translateY(-120%);
-	padding: 0.5rem 1.5rem;
-	color: white;
-	background: black;
-	transition: transform 300ms;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  transform: translateY(-120%);
+  padding: 0.5rem 1.5rem;
+  color: white;
+  background: black;
+  transition: transform 300ms;
 }
 
-#skip-nav-link:focus{
-	transform: translateY(0);
+#skip-nav-link:focus {
+  transform: translateY(0);
 }
