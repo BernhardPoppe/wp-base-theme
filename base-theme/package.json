@@ -14,11 +14,16 @@
     "@parcel/transformer-sass": "^2.3.0",
     "autocomplete": "^0.0.1",
     "cssnano": "^5.0.6",
+    "flickity": "^3.0.0",
+    "p5": "^1.9.2",
     "parcel": "^2.0.0-nightly.389",
     "postcss": "^8.3.5",
+    "postcss-viewport-height-correction": "^1.1.1",
+    "three": "^0.163.0"
   },
   "postcss": {
     "plugins": {
+      "postcss-viewport-height-correction": {},
       "autoprefixer": {
         "overrideBrowserslist": [
           "> 1%",
