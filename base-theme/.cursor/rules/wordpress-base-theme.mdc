@@ -1,0 +1,159 @@
+---
+description: WordPress Base Theme – Projektkonventionen, Architektur und Anleitungen
+alwaysApply: true
+---
+
+# WordPress Base Theme (Classic Theme mit Block-Support)
+
+## Projektstruktur
+
+```
+base-theme/
+├── theme.json                # Design Tokens, Block-Settings, globale Styles
+├── functions.php             # Theme Setup, Asset Loading, Cleanup
+├── header.php / footer.php / index.php
+├── style.css                 # Theme-Header (kein eigentliches CSS)
+├── blocks/
+│   ├── register_blocks.php   # Autoloader – registriert alle Unterordner mit block.json
+│   └── block-styles.js       # Core Block Styles (un)registrieren
+├── patterns/
+│   ├── register_patterns.php # Autoloader – registriert alle .php Pattern-Dateien
+│   └── *.php                 # Einzelne Patterns
+├── graphics/
+│   ├── favicon/
+│   │   ├── favicon-source.svg    # Quelle (512x512 SVG/PNG)
+│   │   └── generated/           # Generierte Favicons (nicht manuell bearbeiten)
+│   ├── svgs/
+│   │   ├── *.svg                 # Einzelne SVG-Icons (Quelle)
+│   │   └── generated/           # sprite.{hash}.svg + sprite-manifest.json
+├── src/
+│   ├── js/
+│   │   ├── index.js              # Frontend JS (Parcel Entry)
+│   │   └── modules/
+│   │       ├── build-scripts/
+│   │       │   ├── generate-favicons.mjs
+│   │       │   └── generate-svg-sprite.mjs
+│   │       └── (zukünftige JS-Module)
+│   └── scss/
+│       ├── theme.scss            # Frontend CSS (Parcel Entry)
+│       ├── editor.scss           # Editor CSS (Parcel Entry)
+│       └── modules/
+│           ├── _variables.scss       # Breakpoints, z-index (Farben/Fonts → theme.json)
+│           ├── _mixins.scss          # breakpoint(), visually-hidden, bounce, flex-center
+│           ├── _base.scss            # Resets, Icon-Styles, Skip-Link
+│           ├── _wp-blocks.scss       # Core Block Overrides
+│           └── _block_imports.scss   # Importiert wp-blocks + custom Block SCSS
+└── dist/                     # Build Output (gitignored)
+```
+
+## Design-System (theme.json)
+
+`theme.json` ist die zentrale Quelle für alle Design Tokens. WordPress generiert daraus automatisch CSS Custom Properties.
+
+**Farben** → `var(--wp--preset--color--primary)`, `--accent`, `--secondary`, `--light`, `--background`, `--foreground`
+**Fonts** → `var(--wp--preset--font-family--body)`, `--heading`
+**Font Sizes** → `var(--wp--preset--font-size--xs)` bis `--xxl` (fluid mit clamp)
+**Spacings** → `var(--wp--preset--spacing--xs)` bis `--xxl` (fluid mit clamp)
+**Layout** → `contentSize: 800px`, `wideSize: 1200px`
+
+Pro neuem Projekt anpassen: Farb-Hex-Werte, Font-Families, ggf. Spacing/Size-Werte in `theme.json`.
+
+Im SCSS die Custom Properties direkt nutzen:
+```scss
+.my-element {
+  color: var(--wp--preset--color--accent);
+  font-size: var(--wp--preset--font-size--l);
+  padding: var(--wp--preset--spacing--m);
+}
+```
+
+## Build-System
+
+- **Parcel** als Bundler (drei Entry-Points: `index.js`, `theme.scss`, `editor.scss`)
+- **PostCSS** mit `cssnano` zur Minifizierung
+- **parcel-namer-rewrite** hasht Output-Dateien (`theme.abc123.css`, `index.abc123.js`)
+- **parcel-reporter-bundle-manifest** erzeugt `dist/parcel-manifest.json` für PHP
+- `functions.php` liest das Manifest und lädt die gehashten Assets
+- `npm run watch` für Entwicklung, `npm run build` für Produktion
+- `npm run favicons` generiert Favicons aus `graphics/favicon/favicon-source.svg` nach `graphics/favicon/generated/`
+- `npm run sprite` generiert `graphics/svgs/generated/sprite.{hash}.svg` aus `graphics/svgs/`
+- Beide laufen automatisch bei `npm run build`
+- Node-Hilfsskripte gehören in `src/js/modules/build-scripts/`
+
+## SVG Icons
+
+Einzelne SVG-Dateien in `graphics/svgs/` ablegen → `npm run sprite` generiert `graphics/svgs/generated/sprite.{hash}.svg`.
+PHP liest den Hash aus `sprite-manifest.json` -- die `icon()`-Funktion macht das automatisch.
+
+```php
+<?php icon('icon-name'); ?>
+<?php icon('icon-name', 'extra-class'); ?>
+```
+
+## Custom Block erstellen
+
+Blocks werden im Theme registriert, nicht als Plugin. Kein `create-block` nötig.
+
+1. Neuen Ordner anlegen: `blocks/mein-block/`
+2. `block.json` erstellen (apiVersion 3):
+```json
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "theme/mein-block",
+  "title": "Mein Block",
+  "category": "theme",
+  "icon": "star-filled",
+  "supports": { "html": false },
+  "attributes": {},
+  "render": "file:./render.php",
+  "style": "file:./style.css"
+}
+```
+3. `render.php` für Server-Side-Rendering:
+```php
+<?php
+$wrapper_attributes = get_block_wrapper_attributes();
+?>
+<div <?php echo $wrapper_attributes; ?>>
+  <!-- Block HTML -->
+</div>
+```
+4. Optional: `style.css` (Frontend + Editor) und `editor.css` (nur Editor)
+5. Block wird automatisch über `register_blocks.php` registriert
+
+## Block Pattern erstellen
+
+1. Neue PHP-Datei in `patterns/` anlegen (z.B. `patterns/hero.php`)
+2. Array returnen:
+```php
+<?php
+return [
+    'title'       => 'Pattern Name',
+    'categories'  => ['theme'],
+    'content'     => '<!-- wp:group -->...',
+];
+```
+3. Pattern wird automatisch über `register_patterns.php` registriert
+
+## Block Styles (Core Blocks anpassen)
+
+In `blocks/block-styles.js` können Core-Block-Varianten (un)registriert werden:
+```js
+wp.domReady(() => {
+    wp.blocks.registerBlockStyle('core/group', {
+        name: 'mein-style',
+        label: 'Mein Style'
+    })
+})
+```
+
+## Konventionen
+
+- Sprache im Code: Englisch. Kommentare/Descriptions: Deutsch oder Englisch
+- SCSS: `@use` Syntax (kein `@import`)
+- Farben, Fonts, Spacings: in `theme.json` definieren, in SCSS als `var(--wp--preset--...)` nutzen
+- SCSS-spezifisches (Breakpoints, z-index): in `_variables.scss`
+- JS: Semikolons weglassen, Single Quotes, Tab-Indentation (siehe `.eslintrc.js`)
+- Kein jQuery, kein ACF
+- Block-spezifisches SCSS in `_block_imports.scss` einbinden

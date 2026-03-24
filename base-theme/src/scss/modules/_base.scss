@@ -1,0 +1,55 @@
+@use "_variables" as *;
+@use "_mixins" as *;
+
+// theme.json handles: body color, background, font-family, font-size,
+// heading sizes/weights, link colors, button styles, spacing.
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+  vertical-align: -0.125em;
+}
+
+#logo {
+  text-decoration: none;
+  color: inherit;
+}
+
+#skip-nav-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(-120%);
+  padding: 0.5rem 1.5rem;
+  color: var(--wp--preset--color--background);
+  background: var(--wp--preset--color--foreground);
+  transition: transform 300ms;
+  z-index: $z-skip-link;
+}
+
+#skip-nav-link:focus {
+  transform: translateY(0);
+}

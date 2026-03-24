@@ -1,0 +1,39 @@
+@use "_variables" as *;
+
+// Responsive Breakpoints
+// Usage: @include breakpoint(tablet) { ... }
+@mixin breakpoint($size) {
+  @if $size == mobile {
+    @media (max-width: $bp-mobile) { @content; }
+  } @else if $size == tablet {
+    @media (max-width: $bp-tablet) { @content; }
+  } @else if $size == desktop {
+    @media (min-width: $bp-desktop) { @content; }
+  } @else {
+    @media (max-width: $size) { @content; }
+  }
+}
+
+// Accessible hidden element (still readable by screen readers)
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@mixin bounce($property: all, $time: 500ms) {
+  transition: $property $time cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@mixin flex-center($direction: column) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: center;
+  align-items: center;
+}

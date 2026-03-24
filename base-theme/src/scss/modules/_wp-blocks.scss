@@ -1,0 +1,75 @@
+@use "_variables" as *;
+@use "_mixins" as *;
+
+// Core Block Overrides
+// theme.json handles most defaults; this file is for layout/visual tweaks
+// that theme.json can't express.
+
+// --- Buttons ---
+
+.wp-block-button__link {
+  border-radius: 0;
+  padding: 0.75em 1.5em;
+  transition: background-color 200ms, color 200ms;
+}
+
+// --- Group ---
+
+.wp-block-group {
+  &.alignfull {
+    padding-inline: var(--wp--preset--spacing--m);
+  }
+}
+
+// --- Columns ---
+
+.wp-block-columns {
+  @include breakpoint(tablet) {
+    flex-direction: column;
+  }
+}
+
+// --- Image ---
+
+.wp-block-image {
+  img {
+    border-radius: 0;
+  }
+
+  figcaption {
+    font-size: var(--wp--preset--font-size--xs);
+    color: var(--wp--preset--color--secondary);
+    margin-top: var(--wp--preset--spacing--xs);
+  }
+}
+
+// --- Cover ---
+
+.wp-block-cover {
+  min-height: 50vh;
+}
+
+// --- Quote ---
+
+.wp-block-quote {
+  border-left: 3px solid var(--wp--preset--color--accent);
+  padding-left: var(--wp--preset--spacing--m);
+  font-style: italic;
+
+  cite {
+    font-style: normal;
+    font-size: var(--wp--preset--font-size--s);
+    color: var(--wp--preset--color--secondary);
+  }
+}
+
+// --- Separator ---
+
+.wp-block-separator {
+  border: none;
+  border-top: 1px solid var(--wp--preset--color--light);
+
+  &.is-style-wide {
+    width: 100%;
+  }
+}

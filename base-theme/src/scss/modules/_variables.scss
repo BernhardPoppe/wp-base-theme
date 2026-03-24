@@ -1,0 +1,20 @@
+// Farben, Fonts, Spacings und Font-Sizes werden in theme.json definiert
+// und sind als CSS Custom Properties verfügbar:
+//
+//   var(--wp--preset--color--primary)
+//   var(--wp--preset--color--accent)
+//   var(--wp--preset--font-family--body)
+//   var(--wp--preset--font-size--l)
+//   var(--wp--preset--spacing--m)
+//
+// Vollständige Liste: https://developer.wordpress.org/themes/global-settings-and-styles/
+
+// Breakpoints (nur in SCSS, nicht in theme.json verfügbar)
+$bp-mobile: 600px;
+$bp-tablet: 900px;
+$bp-desktop: 1200px;
+
+// z-index Skala
+$z-skip-link: 100;
+$z-header: 50;
+$z-overlay: 200;

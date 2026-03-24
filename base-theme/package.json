@@ -1,37 +1,34 @@
 {
   "name": "base_theme",
   "version": "1.0.0",
-  "description": "",
+  "description": "Poppe Base Theme",
   "scripts": {
     "lint": "eslint .",
-    "watch": "rm -rf .parcel-cache && rm -rf dist && parcel watch ./src/index.js ./src/theme.scss ./src/editor.scss",
-    "build": "rm -rf .parcel-cache && rm -rf dist && parcel build ./src/index.js ./src/theme.scss ./src/editor.scss",
+    "watch": "npm run sprite && chokidar \"graphics/svgs/*.svg\" -c \"npm run sprite\" & rm -rf .parcel-cache && rm -rf dist && parcel watch ./src/js/index.js ./src/scss/theme.scss ./src/scss/editor.scss",
+    "build": "npm run favicons && npm run sprite && rm -rf .parcel-cache && rm -rf dist && parcel build ./src/js/index.js ./src/scss/theme.scss ./src/scss/editor.scss",
+    "favicons": "node src/js/modules/build-scripts/generate-favicons.mjs",
+    "sprite": "node src/js/modules/build-scripts/generate-svg-sprite.mjs",
     "deploy": "npm run build && git add . && git commit -m newbuild && git push"
   },
-  "author": "",
+  "author": "Bernhard Poppe",
   "license": "ISC",
-  "dependencies": {
-    "@parcel/transformer-sass": "^2.3.0",
-    "autocomplete": "^0.0.1",
-    "cssnano": "^5.0.6",
-    "flickity": "^3.0.0",
-    "p5": "^1.9.2",
-    "parcel": "^2.0.0-nightly.389",
-    "postcss": "^8.3.5",
-    "postcss-viewport-height-correction": "^1.1.1",
-    "three": "^0.163.0"
-  },
   "postcss": {
     "plugins": {
-      "postcss-viewport-height-correction": {},
       "cssnano": {}
     }
   },
   "devDependencies": {
+    "@parcel/transformer-sass": "^2.12.0",
     "autoprefixer": "^10.2.6",
+    "cssnano": "^5.0.6",
+    "chokidar-cli": "^3.0.0",
     "eslint": "^7.31.0",
+    "favicons": "^7.2.0",
+    "svgstore": "^3.0.1",
+    "parcel": "^2.12.0",
     "parcel-namer-rewrite": "^2.0.0-rc.2",
-    "parcel-reporter-bundle-manifest": "^1.0.0"
+    "parcel-reporter-bundle-manifest": "^1.0.0",
+    "postcss": "^8.3.5"
   },
   "parcel-namer-rewrite": {
     "chain": "@parcel/namer-default",
