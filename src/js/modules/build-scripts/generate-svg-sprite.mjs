@@ -12,6 +12,7 @@
  */
 
 import svgstore from 'svgstore'
+import { logBuild } from './build-log.mjs'
 import { createHash } from 'crypto'
 import { readFileSync, writeFileSync, readdirSync, rmSync, mkdirSync } from 'fs'
 import { join, basename, dirname } from 'path'
@@ -25,7 +26,7 @@ const OUTPUT_DIR = join(SVG_DIR, 'generated')
 const files = readdirSync(SVG_DIR).filter(f => f.endsWith('.svg')).sort()
 
 if (files.length === 0) {
-	console.log('SVG sprite skipped (no SVGs in graphics/svgs/)')
+	logBuild('SVG sprite skipped (no SVGs in graphics/svgs/)')
 	process.exit(0)
 }
 
@@ -52,4 +53,4 @@ mkdirSync(OUTPUT_DIR, { recursive: true })
 writeFileSync(join(OUTPUT_DIR, filename), svgContent)
 writeFileSync(join(OUTPUT_DIR, 'sprite-manifest.json'), JSON.stringify({ sprite: filename }))
 
-console.log(`SVG sprite generated (${files.length} icons → ${filename})`)
+logBuild(`SVG sprite generated (${files.length} icons → ${filename})`)

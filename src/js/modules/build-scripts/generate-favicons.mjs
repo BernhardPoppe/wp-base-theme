@@ -8,6 +8,7 @@
  */
 
 import { favicons } from 'favicons'
+import { logBuild } from './build-log.mjs'
 import { writeFile, mkdir, rm } from 'fs/promises'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
@@ -51,7 +52,7 @@ async function generate() {
 
 	await writeFile(join(OUTPUT_DIR, 'head-tags.html'), response.html.join('\n'))
 
-	console.log(`Favicons generated (${response.images.length} files)`)
+	logBuild(`Favicons generated (${response.images.length} files)`)
 }
 
 generate().catch((err) => {
