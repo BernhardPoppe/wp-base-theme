@@ -1,7 +1,7 @@
 {
   "name": "base_theme",
   "version": "1.0.0",
-  "description": "Poppe Base Theme",
+  "description": "WordPress base theme (Parcel, theme.json, blocks). Custom-built starter by Bernhard Poppe.",
   "scripts": {
     "lint": "eslint .",
     "watch": "npm run sprite && chokidar \"graphics/svgs/*.svg\" -c \"npm run sprite\" & rm -rf .parcel-cache && rm -rf dist && parcel watch ./src/js/index.js ./src/scss/theme.scss ./src/scss/editor.scss",

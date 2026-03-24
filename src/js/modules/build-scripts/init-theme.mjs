@@ -31,9 +31,12 @@ function replaceInFile(filePath, replacements) {
 	writeFileSync(filePath, content)
 }
 
-function removeInitScript(pkgPath) {
+function finalizePackageJson(pkgPath) {
 	const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8'))
-	delete pkg.scripts.init
+	delete pkg.scripts?.init
+	// `npm init` often sets `main` to the first .js file (e.g. `.eslintrc.js`). Parcel /
+	// parcel-namer-rewrite can treat `main` as an extra entry → wrong bundle vs. rules.
+	delete pkg.main
 	writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n')
 }
 
@@ -61,9 +64,12 @@ async function init() {
 
 	console.log('')
 
+	const defaultDescription =
+		'WordPress base theme (Parcel, theme.json, blocks). Custom-built starter by Bernhard Poppe.'
+	const descriptionForProject = `${name} — WordPress theme, based on a custom starter by Bernhard Poppe.`
 	replaceInFile(join(ROOT, 'style.css'), [
 		['Theme Name: Base Theme', `Theme Name: ${name}`],
-		['Description: Poppe Base Theme', `Description: ${name}`],
+		[`Description: ${defaultDescription}`, `Description: ${descriptionForProject}`],
 	])
 	console.log('  ✓ style.css')
 
@@ -72,9 +78,9 @@ async function init() {
 		// eslint-disable-next-line quotes
 		['"name": "base_theme"', `"name": "${underscore}"`],
 		// eslint-disable-next-line quotes
-		['"description": "Poppe Base Theme"', `"description": "${name}"`],
+		[`"description": "${defaultDescription}"`, `"description": "${descriptionForProject}"`],
 	])
-	removeInitScript(pkgPath)
+	finalizePackageJson(pkgPath)
 	console.log('  ✓ package.json')
 
 	replaceInFile(join(ROOT, 'src/js/modules/build-scripts/generate-favicons.mjs'), [
