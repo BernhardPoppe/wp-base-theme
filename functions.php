@@ -59,13 +59,31 @@ function manifest() {
     return json_decode($manifest, true);
 }
 
+/**
+ * Resolves a bundle path from parcel-manifest.json. Keys must match Parcel output
+ * (e.g. js/index.js, scss/theme.scss); older manifests may use entry names only.
+ *
+ * @param array  $m       Decoded manifest.
+ * @param array  $keys    Preferred key first, then fallbacks.
+ * @return string Relative path starting with / or empty.
+ */
+function manifest_bundle_path($m, $keys) {
+    foreach ($keys as $key) {
+        if (!empty($m[$key])) {
+            return $m[$key];
+        }
+    }
+    return '';
+}
+
 function custom_header_scripts() {
     if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
         $m = manifest();
-        if (!empty($m['index.js'])) {
+        $script = manifest_bundle_path($m, array('js/index.js', 'index.js'));
+        if ($script !== '') {
             wp_enqueue_script(
                 'custom_scripts',
-                get_template_directory_uri() . '/dist' . $m['index.js'],
+                get_template_directory_uri() . '/dist' . $script,
                 array(),
                 null,
                 true
@@ -80,10 +98,11 @@ function custom_header_scripts() {
 
 function custom_styles() {
     $m = manifest();
-    if (!empty($m['theme.scss'])) {
+    $style = manifest_bundle_path($m, array('scss/theme.scss', 'theme.scss'));
+    if ($style !== '') {
         wp_enqueue_style(
             'theme_css',
-            get_template_directory_uri() . '/dist' . $m['theme.scss'],
+            get_template_directory_uri() . '/dist' . $style,
             array(),
             null
         );
@@ -92,10 +111,11 @@ function custom_styles() {
 
 function theme_editor_styles() {
     $m = manifest();
-    if (!empty($m['editor.scss'])) {
+    $editor = manifest_bundle_path($m, array('scss/editor.scss', 'editor.scss'));
+    if ($editor !== '') {
         wp_enqueue_style(
             'editor-css',
-            get_template_directory_uri() . '/dist' . $m['editor.scss']
+            get_template_directory_uri() . '/dist' . $editor
         );
     }
 }

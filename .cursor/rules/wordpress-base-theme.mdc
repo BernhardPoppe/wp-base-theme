@@ -73,8 +73,8 @@ Im SCSS die Custom Properties direkt nutzen:
 - **PostCSS** mit `cssnano` zur Minifizierung
 - **parcel-namer-rewrite** hasht Output-Dateien (`theme.abc123.css`, `index.abc123.js`)
 - In `package.json` kein **`main`** setzen (oder nach `npm init` entfernen): Wenn `main` z. B. auf `.eslintrc.js` zeigt, kann Parcel das als Entry behandeln und die Namer-Regeln mit falschen Bundles kreuzen. Entries laufen nur über die `parcel`-Zeilen in `scripts`.
-- **parcel-reporter-bundle-manifest** erzeugt `dist/parcel-manifest.json` für PHP
-- `functions.php` liest das Manifest und lädt die gehashten Assets
+- **parcel-reporter-bundle-manifest** erzeugt `dist/parcel-manifest.json` für PHP — Schlüssel entsprechen den Entry-Pfaden (z. B. `js/index.js`, `scss/theme.scss`, `scss/editor.scss`), nicht nur Dateinamen
+- `functions.php` liest das Manifest über `manifest_bundle_path()` (mit Fallback auf ältere Key-Namen)
 - `npm run watch` für Entwicklung, `npm run build` für Produktion
 - `npm run favicons` generiert Favicons aus `graphics/favicon/favicon-source.svg` nach `graphics/favicon/generated/`
 - `npm run sprite` generiert `graphics/svgs/generated/sprite.{hash}.svg` aus `graphics/svgs/`
