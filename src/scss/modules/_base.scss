@@ -38,18 +38,22 @@ img {
   color: inherit;
 }
 
+// Skip link: not visible in the layout until focused (keyboard / AT). Do not remove — WCAG 2.4.1.
 #skip-nav-link {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: translateY(-120%);
-  padding: 0.5rem 1.5rem;
-  color: var(--wp--preset--color--background);
-  background: var(--wp--preset--color--foreground);
-  transition: transform 300ms;
+  @include visually-hidden;
   z-index: $z-skip-link;
-}
 
-#skip-nav-link:focus {
-  transform: translateY(0);
+  &:focus {
+    @include visually-hidden-off;
+    padding: 0.5rem 1.5rem;
+    color: var(--wp--preset--color--background);
+    background: var(--wp--preset--color--foreground);
+    text-decoration: none;
+    z-index: $z-skip-link;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--wp--preset--color--accent);
+    outline-offset: 2px;
+  }
 }

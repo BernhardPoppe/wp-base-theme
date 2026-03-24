@@ -27,6 +27,19 @@
   border: 0;
 }
 
+// Reverts @include visually-hidden (e.g. skip link on :focus — WCAG 2.4.1)
+@mixin visually-hidden-off {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
 @mixin bounce($property: all, $time: 500ms) {
   transition: $property $time cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
