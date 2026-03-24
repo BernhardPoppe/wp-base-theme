@@ -8,7 +8,8 @@
     "build": "npm run favicons && npm run sprite && rm -rf .parcel-cache && rm -rf dist && parcel build ./src/js/index.js ./src/scss/theme.scss ./src/scss/editor.scss",
     "favicons": "node src/js/modules/build-scripts/generate-favicons.mjs",
     "sprite": "node src/js/modules/build-scripts/generate-svg-sprite.mjs",
-    "deploy": "npm run build && git add . && git commit -m newbuild && git push"
+    "deploy": "npm run build && git add . && git commit -m newbuild && git push",
+    "init": "node src/js/modules/build-scripts/init-theme.mjs"
   },
   "author": "Bernhard Poppe",
   "license": "ISC",

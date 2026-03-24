@@ -8,7 +8,6 @@ alwaysApply: true
 ## Projektstruktur
 
 ```
-base-theme/
 ├── theme.json                # Design Tokens, Block-Settings, globale Styles
 ├── functions.php             # Theme Setup, Asset Loading, Cleanup
 ├── header.php / footer.php / index.php
@@ -23,16 +22,17 @@ base-theme/
 │   ├── favicon/
 │   │   ├── favicon-source.svg    # Quelle (512x512 SVG/PNG)
 │   │   └── generated/           # Generierte Favicons (nicht manuell bearbeiten)
-│   ├── svgs/
-│   │   ├── *.svg                 # Einzelne SVG-Icons (Quelle)
-│   │   └── generated/           # sprite.{hash}.svg + sprite-manifest.json
+│   └── svgs/
+│       ├── *.svg                 # Einzelne SVG-Icons (Quelle)
+│       └── generated/           # sprite.{hash}.svg + sprite-manifest.json
 ├── src/
 │   ├── js/
 │   │   ├── index.js              # Frontend JS (Parcel Entry)
 │   │   └── modules/
 │   │       ├── build-scripts/
 │   │       │   ├── generate-favicons.mjs
-│   │       │   └── generate-svg-sprite.mjs
+│   │       │   ├── generate-svg-sprite.mjs
+│   │       │   └── init-theme.mjs
 │   │       └── (zukünftige JS-Module)
 │   └── scss/
 │       ├── theme.scss            # Frontend CSS (Parcel Entry)
@@ -59,7 +59,6 @@ base-theme/
 Pro neuem Projekt anpassen: Farb-Hex-Werte, Font-Families, ggf. Spacing/Size-Werte in `theme.json`.
 
 Im SCSS die Custom Properties direkt nutzen:
-
 ```scss
 .my-element {
   color: var(--wp--preset--color--accent);
@@ -97,7 +96,6 @@ Blocks werden im Theme registriert, nicht als Plugin. Kein `create-block` nötig
 
 1. Neuen Ordner anlegen: `blocks/mein-block/`
 2. `block.json` erstellen (apiVersion 3):
-
 ```json
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
@@ -112,9 +110,7 @@ Blocks werden im Theme registriert, nicht als Plugin. Kein `create-block` nötig
   "style": "file:./style.css"
 }
 ```
-
 3. `render.php` für Server-Side-Rendering:
-
 ```php
 <?php
 $wrapper_attributes = get_block_wrapper_attributes();
@@ -123,7 +119,6 @@ $wrapper_attributes = get_block_wrapper_attributes();
   <!-- Block HTML -->
 </div>
 ```
-
 4. Optional: `style.css` (Frontend + Editor) und `editor.css` (nur Editor)
 5. Block wird automatisch über `register_blocks.php` registriert
 
@@ -131,7 +126,6 @@ $wrapper_attributes = get_block_wrapper_attributes();
 
 1. Neue PHP-Datei in `patterns/` anlegen (z.B. `patterns/hero.php`)
 2. Array returnen:
-
 ```php
 <?php
 return [
@@ -140,34 +134,33 @@ return [
     'content'     => '<!-- wp:group -->...',
 ];
 ```
-
 3. Pattern wird automatisch über `register_patterns.php` registriert
 
 ## Block Styles (Core Blocks anpassen)
 
 In `blocks/block-styles.js` können Core-Block-Varianten (un)registriert werden:
-
 ```js
 wp.domReady(() => {
-  wp.blocks.registerBlockStyle("core/group", {
-    name: "mein-style",
-    label: "Mein Style",
-  });
-});
+    wp.blocks.registerBlockStyle('core/group', {
+        name: 'mein-style',
+        label: 'Mein Style'
+    })
+})
 ```
 
 ## Neues Projekt starten
 
-1. Repo klonen: `git clone <repo-url> mein-projekt`
-2. In den Theme-Ordner wechseln: `cd mein-projekt`
-3. `npm run init` ausführen – fragt interaktiv den Projektnamen ab und aktualisiert:
+Dieses Repo ist ein GitHub Template Repository. Workflow:
+
+1. Auf GitHub "Use this template" klicken oder Repo klonen
+2. `npm run init` -- fragt interaktiv den Projektnamen ab und aktualisiert:
    - `style.css` (Theme Name, Description)
    - `package.json` (name, description)
    - `generate-favicons.mjs` (appName, appShortName)
-4. `npm install`
-5. Favicon-Quelle in `graphics/favicon/favicon-source.svg` ersetzen
-6. Farben, Fonts und Spacings in `theme.json` anpassen
-7. `npm run build`
+3. `npm install`
+4. Favicon-Quelle in `graphics/favicon/favicon-source.svg` ersetzen
+5. Farben, Fonts und Spacings in `theme.json` anpassen
+6. `npm run build`
 
 Das Init-Skript entfernt sich nach Ausführung selbst aus den npm scripts.
 
