@@ -163,6 +163,55 @@ function my_wp_nav_menu_args($args = '') {
 add_filter('wp_nav_menu_args', 'my_wp_nav_menu_args');
 add_filter('show_admin_bar', '__return_false');
 
+/*------------------------------------*\
+	Login screen (custom logo)
+\*------------------------------------*/
+
+/**
+ * Public URL for the login logo (favicon source SVG), with cache busting.
+ *
+ * @return string Empty if the file is missing.
+ */
+function theme_login_logo_asset_url() {
+    $file = get_template_directory() . '/graphics/favicon/favicon-source.svg';
+    if (!is_readable($file)) {
+        return '';
+    }
+
+    return get_template_directory_uri() . '/graphics/favicon/favicon-source.svg?ver=' . rawurlencode((string) filemtime($file));
+}
+
+function theme_login_logo_styles() {
+    $url = theme_login_logo_asset_url();
+    if ($url === '') {
+        return;
+    }
+    ?>
+    <style id="theme-login-logo">
+    .login h1 a {
+        background-image: url(<?php echo esc_url($url); ?>) !important;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+        width: 100%;
+        max-width: 320px;
+        height: 96px;
+    }
+    </style>
+    <?php
+}
+add_action('login_head', 'theme_login_logo_styles');
+
+function theme_login_header_url() {
+    return home_url('/');
+}
+add_filter('login_headerurl', 'theme_login_header_url');
+
+function theme_login_header_text() {
+    return get_bloginfo('name', 'display');
+}
+add_filter('login_headertext', 'theme_login_header_text');
+
 remove_filter('the_excerpt', 'wpautop');
 
 /*------------------------------------*\
