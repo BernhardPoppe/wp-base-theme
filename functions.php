@@ -258,17 +258,55 @@ function sprite_url() {
 }
 
 /**
+ * Returns SVG markup for an icon from the generated sprite (empty string on failure).
+ *
+ * @param string $name  Icon id matching the SVG filename without `.svg`.
+ * @param string $class Optional extra CSS classes.
+ */
+function theme_icon_markup($name, $class = '') {
+    $name = is_string($name) ? trim($name) : '';
+    if ($name === '') {
+        return '';
+    }
+
+    $sprite = sprite_url();
+    if ($sprite === '') {
+        return '';
+    }
+
+    $cls = 'icon icon-' . esc_attr($name);
+    if ($class !== '') {
+        $cls .= ' ' . esc_attr($class);
+    }
+
+    return '<svg class="' . $cls . '" aria-hidden="true"><use href="' . esc_url($sprite) . '#' . esc_attr($name) . '"></use></svg>';
+}
+
+/**
  * Outputs an SVG icon from the generated sprite.
  * Usage: <?php icon('arrow-right'); ?>
  * With class: <?php icon('arrow-right', 'my-class'); ?>
  */
 function icon($name, $class = '') {
-    $cls = 'icon icon-' . esc_attr($name);
-    if ($class) {
-        $cls .= ' ' . esc_attr($class);
-    }
-    echo '<svg class="' . $cls . '" aria-hidden="true"><use href="' . sprite_url() . '#' . esc_attr($name) . '"></use></svg>';
+    echo theme_icon_markup($name, $class);
 }
+
+/**
+ * Shortcode: [theme_icon name="icon-id" class="optional extra classes"]
+ */
+function theme_icon_shortcode($atts) {
+    $atts = shortcode_atts(
+        array(
+            'name'  => '',
+            'class' => '',
+        ),
+        $atts,
+        'theme_icon'
+    );
+
+    return theme_icon_markup($atts['name'], $atts['class']);
+}
+add_shortcode('theme_icon', 'theme_icon_shortcode');
 
 /*------------------------------------*\
 	Custom Blocks & Patterns
