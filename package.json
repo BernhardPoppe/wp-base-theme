@@ -7,6 +7,7 @@
     "watch": "npm run sprite && chokidar \"graphics/svgs/*.svg\" -c \"npm run sprite\" & rm -rf .parcel-cache && rm -rf dist && parcel watch ./src/js/index.js ./src/scss/theme.scss ./src/scss/editor.scss",
     "build": "npm run favicons && npm run sprite && rm -rf .parcel-cache && rm -rf dist && parcel build ./src/js/index.js ./src/scss/theme.scss ./src/scss/editor.scss",
     "favicons": "node src/js/modules/build-scripts/generate-favicons.mjs",
+    "favicons:force": "node src/js/modules/build-scripts/generate-favicons.mjs --force",
     "sprite": "node src/js/modules/build-scripts/generate-svg-sprite.mjs",
     "deploy": "npm run build && node src/js/modules/build-scripts/deploy-sftp.mjs",
     "deploy:nogit": "npm run build && node src/js/modules/build-scripts/deploy-sftp.mjs --no-git",

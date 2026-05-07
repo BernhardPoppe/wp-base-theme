@@ -77,6 +77,8 @@ Im SCSS die Custom Properties direkt nutzen:
 - `functions.php` liest das Manifest über `manifest_bundle_path()` (mit Fallback auf ältere Key-Namen)
 - `npm run watch` für Entwicklung, `npm run build` für Produktion
 - `npm run favicons` generiert Favicons aus `graphics/favicon/favicon-source.svg` nach `graphics/favicon/generated/`
+ - Cached: vergleicht `md5(source + config)` gegen `generated/.source-hash` und überspringt, wenn nichts geändert wurde
+ - `npm run favicons:force` (oder `--force`) erzwingt Neugenerierung
 - `npm run sprite` generiert `graphics/svgs/generated/sprite.{hash}.svg` aus `graphics/svgs/`
 - Beide laufen automatisch bei `npm run build`
 - Node-Hilfsskripte gehören in `src/js/modules/build-scripts/`
