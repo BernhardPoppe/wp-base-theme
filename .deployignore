@@ -1,0 +1,45 @@
+# Patterns für `npm run deploy` (gitignore-Syntax).
+# Was hier matcht, wird NICHT auf den Server hochgeladen.
+
+# Build/Dev
+node_modules
+.parcel-cache
+.git
+.gitignore
+.gitattributes
+
+# Env / lokale Configs
+.env
+.env.*
+!.env.example
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.vscode
+.cursor
+.idea
+.editorconfig
+.eslintrc*
+.eslintignore
+.eslintcache
+.prettierrc*
+.parcelrc
+
+# Logs
+*.log
+
+# Quell-Dateien (kompiliert in dist/)
+src
+
+# Quell-Assets (generiert in graphics/*/generated/)
+graphics/svgs/*.svg
+graphics/favicon/favicon-source.svg
+
+# Repo-Meta
+README.md
+package-lock.json
+
+# Deploy-Tooling selbst muss nicht auf den Server
+.deployignore
+.env.example

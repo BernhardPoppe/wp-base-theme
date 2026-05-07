@@ -81,6 +81,21 @@ Im SCSS die Custom Properties direkt nutzen:
 - Beide laufen automatisch bei `npm run build`
 - Node-Hilfsskripte gehören in `src/js/modules/build-scripts/`
 
+## Deployment (SFTP + Git)
+
+`npm run deploy` läuft in drei Schritten: **build → SFTP-Upload → git add/commit/push**.
+
+- Credentials liegen in `.env` (gitignored). Vorlage: `.env.example`.
+- Auth wahlweise über `SFTP_PASSWORD` oder `SFTP_PRIVATE_KEY` (`~` wird auf `$HOME` expandiert) plus optional `SFTP_PASSPHRASE`.
+- Welche Dateien hochgeladen werden, steuert `.deployignore` (gitignore-Syntax). Defaults schließen `node_modules/`, `.git/`, `src/`, Build-Configs (`.parcelrc`, `.eslintrc*`), `.env*` (außer `.env.example`) und Quell-Assets (`graphics/svgs/*.svg`, `graphics/favicon/favicon-source.svg`) aus – nur das `dist/`-Build-Output und PHP/Theme-Dateien gehen raus.
+- Git läuft erst **nach** erfolgreichem Upload: `git add -A`, dann Commit (übersprungen falls nichts staged ist), dann `git push`. Schlägt der Git-Schritt fehl, wird das nur gewarnt – der SFTP-Upload bleibt gültig.
+- Commit-Message ist standardmäßig `newbuild`. Override per Env-Var: `DEPLOY_COMMIT_MESSAGE="fix header" npm run deploy`.
+- Scripts:
+  - `npm run deploy` – build + SFTP + git
+  - `npm run deploy:nogit` – build + SFTP, ohne git
+  - `npm run deploy:dry` – nur Datei-Liste, kein Transfer, kein git
+- Implementiert in `src/js/modules/build-scripts/deploy-sftp.mjs` mit `ssh2-sftp-client`, `dotenv`, `ignore`.
+
 ## SVG Icons
 
 Einzelne SVG-Dateien in `graphics/svgs/` ablegen → `npm run sprite` generiert `graphics/svgs/generated/sprite.{hash}.svg`.

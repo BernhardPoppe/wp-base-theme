@@ -12,6 +12,7 @@ graphics/svgs/generated/
 # Environment
 .env
 .env.*
+!.env.example
 
 # Logs
 *.log
