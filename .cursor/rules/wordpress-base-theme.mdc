@@ -87,8 +87,10 @@ Im SCSS die Custom Properties direkt nutzen:
 
 `npm run deploy` läuft in drei Schritten: **build → SFTP-Upload → git add/commit/push**.
 
-- Credentials liegen in `.env` (gitignored). Vorlage: `.env.example`.
-- Auth wahlweise über `SFTP_PASSWORD` oder `SFTP_PRIVATE_KEY` (`~` wird auf `$HOME` expandiert) plus optional `SFTP_PASSPHRASE`.
+- Credentials liegen in `.env` (gitignored). Vorlage: `.env.example` → `cp .env.example .env`.
+- **SFTP einrichten** (empfohlen): `SFTP_HOST`, `SFTP_PORT` (meist 22), `SFTP_USER`, `SFTP_REMOTE_PATH` in `.env`. Auth über `SFTP_PASSWORD` oder `SFTP_PRIVATE_KEY` (`~` → `$HOME`), optional `SFTP_PASSPHRASE`. Konkrete Werte und Auth-Methode je nach Hoster.
+- **FTP-Fallback**: Wenn kein SFTP verfügbar, in abgeleiteten Projekten FTP-Deploy mit `FTP_HOST`, `FTP_USER`, `FTP_PASSWORD`, `FTP_REMOTE_ROOT` — Base Theme nutzt standardmäßig SFTP (`deploy-sftp.mjs`).
+- `npm run ssh` öffnet eine SSH-Shell aus denselben `.env`-Werten (`SFTP_HOST`, `SFTP_USER`, `SFTP_PRIVATE_KEY`).
 - Welche Dateien hochgeladen werden, steuert `.deployignore` (gitignore-Syntax). Defaults schließen `node_modules/`, `.git/`, `src/`, Build-Configs (`.parcelrc`, `.eslintrc*`), `.env*` (außer `.env.example`) und Quell-Assets (`graphics/svgs/*.svg`, `graphics/favicon/favicon-source.svg`) aus – nur das `dist/`-Build-Output und PHP/Theme-Dateien gehen raus.
 - Git läuft erst **nach** erfolgreichem Upload: `git add -A`, dann Commit (übersprungen falls nichts staged ist), dann `git push`. Schlägt der Git-Schritt fehl, wird das nur gewarnt – der SFTP-Upload bleibt gültig.
 - Commit-Message ist standardmäßig `newbuild`. Override per Env-Var: `DEPLOY_COMMIT_MESSAGE="fix header" npm run deploy`.
@@ -96,7 +98,9 @@ Im SCSS die Custom Properties direkt nutzen:
   - `npm run deploy` – build + SFTP + git
   - `npm run deploy:nogit` – build + SFTP, ohne git
   - `npm run deploy:dry` – nur Datei-Liste, kein Transfer, kein git
+  - `npm run ssh` – SSH-Shell zum Server (`.env`)
 - Implementiert in `src/js/modules/build-scripts/deploy-sftp.mjs` mit `ssh2-sftp-client`, `dotenv`, `ignore`.
+- Ausführliche Anleitung: `README.md` → „Deployment einrichten“.
 
 ## SVG Icons
 
@@ -176,9 +180,10 @@ Dieses Repo ist ein GitHub Template Repository. Workflow:
    - `package.json` (name, description; entfernt `main` und das `init`-Script)
    - `generate-favicons.mjs` (appName, appShortName)
 3. `npm install`
-4. Favicon-Quelle in `graphics/favicon/favicon-source.svg` ersetzen
-5. Farben, Fonts und Spacings in `theme.json` anpassen
-6. `npm run build`
+4. `cp .env.example .env` — SFTP-Zugangsdaten eintragen (siehe README → „Deployment einrichten“)
+5. Favicon-Quelle in `graphics/favicon/favicon-source.svg` ersetzen
+6. Farben, Fonts und Spacings in `theme.json` anpassen
+7. `npm run build`
 
 Das Init-Skript entfernt sich nach Ausführung aus den npm scripts und löscht `package.json` → `main` (verhindert Parcel/namer-Konflikte nach versehentlichem `npm init`).
 
